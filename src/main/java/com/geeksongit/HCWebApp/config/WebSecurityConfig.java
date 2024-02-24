@@ -26,14 +26,15 @@ public class WebSecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/home").permitAll()
-				.anyRequest().authenticated()
+				.requestMatchers("/", "/home").authenticated()
 			)
 			.formLogin((form) -> form
 				.loginPage("/login")
 				.permitAll()
 			)
-			.logout((logout) -> logout.permitAll());
+			.logout((logout) -> logout
+				.logoutSuccessUrl("/login?logout")
+	            .permitAll());
 		return http.build();
 	}
 
